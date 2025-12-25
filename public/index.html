@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USD to IRR Exchange Rate | Real-time Currency</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/x-icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-chart-line"></i>
+        <h1>نرخ ارز</h1>
+      </div>
+      <div class="header-info">
+        <p class="subtitle">نرخ لحظه‌ای دلار به ریال</p>
+        <p class="farsi-date" id="farsiDate">در حال بارگذاری...</p>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Primary Rate Card -->
+      <div class="card primary-card">
+        <div class="card-header">
+          <h2><i class="fas fa-dollar-sign"></i> نرخ اصلی دلار</h2>
+          <div class="last-updated" id="lastUpdated">
+            <i class="fas fa-clock"></i> <span>در حال بارگذاری...</span>
+          </div>
+        </div>
+
+        <div class="rate-display" id="rateDisplay">
+          <div class="currency-pair">
+            <div class="currency from-currency">
+              <span class="flag">🇺🇸</span>
+              <div class="currency-details">
+                <span class="currency-code">USD</span>
+                <span class="currency-name">دلار آمریکا</span>
+              </div>
+            </div>
+
+            <div class="exchange-icon">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+
+            <div class="currency to-currency">
+              <span class="flag">🇮🇷</span>
+              <div class="currency-details">
+                <span class="currency-code">IRR</span>
+                <span class="currency-name">ریال ایران</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rate-value-container">
+            <div class="rate-amount" id="rateAmount">
+              <div class="loading">
+                <div class="spinner"></div>
+                <p>در حال دریافت نرخ...</p>
+              </div>
+            </div>
+            <div class="rate-description">
+              <p>هر 1 دلار = <span id="rateText">---</span> ریال</p>
+            </div>
+          </div>
+
+          <div class="change-indicator" id="changeIndicator">
+            <div class="change-value">
+              <i class="fas fa-arrow-up" id="changeIcon"></i>
+              <span id="changeAmount">0</span>
+            </div>
+            <div class="change-label">تغییر</div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="rate-info">
+            <div class="info-item">
+              <i class="fas fa-calendar-alt"></i>
+              <span id="rateDate">--/--/--</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-database"></i>
+              <span id="rateSource">Golestannet Tech</span>
+            </div>
+          </div>
+          <button id="refreshBtn" class="btn-refresh">
+            <i class="fas fa-sync-alt"></i> بروزرسانی
+          </button>
+        </div>
+      </div>
+      <!-- Additional Rates -->
+      <!-- Comment by me 
+      <div class="card rates-card">
+        <div class="card-header">
+          <h2><i class="fas fa-list"></i> سایر نرخ‌های دلار</h2>
+        </div>
+        <div class="rates-table-container">
+          <table class="rates-table" id="ratesTable">
+            <thead>
+              <tr>
+                <th>نام نرخ</th>
+                <th>مقدار</th>
+                <th>تغییر</th>
+                <th>زمان</th>
+              </tr>
+            </thead>
+            <tbody id="ratesTableBody">
+              <tr>
+                <td colspan="4" class="loading-cell">
+                  <div class="spinner small"></div>
+                  <p>در حال بارگذاری نرخ‌ها...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      -->
+
+      <!-- Status Panel -->
+
+      <div class="status-panel">
+        <div class="status-item">
+          <i class="fas fa-server" id="statusIcon"></i>
+          <div class="status-details">
+            <span class="status-label">وضعیت سرور</span>
+            <span class="status-value" id="statusText">در حال اتصال...</span>
+          </div>
+        </div>
+        <div class="status-item">
+          <i class="fas fa-history"></i>
+          <div class="status-details">
+            <span class="status-label">آخرین بروزرسانی</span>
+            <span class="status-value" id="lastChecked">--:--:--</span>
+          </div>
+        </div>
+        <div class="status-item">
+          <i class="fas fa-bolt"></i>
+          <div class="status-details">
+            <span class="status-label">تعداد نرخ‌ها</span>
+            <span class="status-value" id="ratesCount">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Alert -->
+      <div class="error-alert" id="errorAlert">
+        <div class="alert-content">
+          <div class="alert-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="alert-message">
+            <h4 id="errorTitle">خطا در اتصال</h4>
+            <p id="errorMessage">در حال نمایش اطلاعات آزمایشی</p>
+          </div>
+          <button class="alert-close" onclick="hideError()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <p>© ۱۴۰۳ - سامانه نمایش نرخ ارز | نرخ‌ها به صورت لحظه‌ای بروزرسانی می‌شوند</p>
+        <p class="footer-note">منبع داده‌ها: سرویس Navasan.tech | هر ۶۰ ثانیه بروزرسانی خودکار</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
